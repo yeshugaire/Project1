@@ -1,0 +1,23 @@
+header {
+    background-color: black;
+}
+
+header p {
+    padding: 5px;
+    margin-bottom: 0px;
+}
+
+header img {
+   height: 50px; 
+   margin: 25px;
+}
+
+#title-div {
+    padding: 15px;
+}
+
+header h1 {
+    font-size: 60px;
+}
+
+
