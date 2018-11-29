@@ -20,4 +20,12 @@ header h1 {
     font-size: 60px;
 }
 
+.btn-lg {
+    border-radius: 24px;
+}
+
+.tablecolor {
+    background: teal;
+}
+
 
