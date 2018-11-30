@@ -1,3 +1,4 @@
+var loopEnd
 // get access token from url
 var hash = window.location.hash.substr(14);
 var parsedHash = hash.split("&");
@@ -35,8 +36,8 @@ $(document).on("click", ".playlist", function () {
 
     // variables and loop for if playlist is >100 tracks
     var offset = 0;
-    var loopEnd = $(this).attr("data-total-tracks");
-    for (i = 0; i < loopEnd/100; i++) {
+    loopEnd = $(this).attr("data-total-tracks");
+    for (i = 0; i < loopEnd / 100; i++) {
         //  ajax call for tracks
         $.ajax({
             url: "https://api.spotify.com/v1/playlists/" + currentPlaylistID + "/tracks?offset=" + offset,
@@ -62,13 +63,13 @@ $(document).on("click", ".playlist", function () {
                     //     };
                     // };
                     // else {
-                            trackArtists= data.artists[0].name;
+                    trackArtists = data.artists[0].name;
                     // };
 
                     // make table row and add name, ablum and artist to it
-                    var tableRow = $("<tr data-track-id='"+ data.id +"'><td>" + data.name + "</td><td>" + trackArtists + "</td><td>" + data.album.name + "</td></tr>");
+                    var tableRow = $("<tr data-track-id='" + data.id + "'><td>" + data.name + "</td><td>" + trackArtists + "</td><td>" + data.album.name + "</td></tr>");
                     $("#current-playlist-table").append(tableRow);
-                    
+
                 };
                 console.log(trackIds);
                 // make ajax call for track features
@@ -79,15 +80,15 @@ $(document).on("click", ".playlist", function () {
                     },
                     success: function (response) {
                         console.log(response);
-                        var info= response.audio_features;
+                        var info = response.audio_features;
                         console.log(info)
 
                         // loop through tracks and display track features
-                        for (f=0; f<info.length; f++){
+                        for (f = 0; f < info.length; f++) {
                             console.log(info[f].id)
-                            var info= response.audio_features;
-                            
-                            for (j=0; j<loopEnd; j++ )
+                            var info = response.audio_features;
+
+                            for (j = 0; j < loopEnd; j++)
                                 if ($($("#current-playlist-table tr")[j]).attr("data-track-id") === info[f].id) {
                                     // variables for track features
                                     var key
@@ -95,69 +96,69 @@ $(document).on("click", ".playlist", function () {
                                     var timeSignature
 
                                     // if statements for key
-                                if (info[f].key === 0){
-                                        key= "C";
+                                    if (info[f].key === 0) {
+                                        key = "C";
                                     };
-                                if (info[f].key === 1){
-                                        key= "C#/Db";
+                                    if (info[f].key === 1) {
+                                        key = "C#/Db";
                                     };
-                                if (info[f].key === 2){
-                                        key= "D";                           
+                                    if (info[f].key === 2) {
+                                        key = "D";
                                     };
-                                if (info[f].key === 3){
-                                        key= "D#/Eb";
+                                    if (info[f].key === 3) {
+                                        key = "D#/Eb";
                                     };
-                                if (info[f].key === 4){
-                                        key= "E";
+                                    if (info[f].key === 4) {
+                                        key = "E";
                                     };
-                                if (info[f].key === 5){
-                                        key= "F";
+                                    if (info[f].key === 5) {
+                                        key = "F";
                                     };
-                                if (info[f].key === 6){
-                                        key= "F#/Gb";
+                                    if (info[f].key === 6) {
+                                        key = "F#/Gb";
                                     };
-                                if (info[f].key === 7){
-                                        key= "G";
+                                    if (info[f].key === 7) {
+                                        key = "G";
                                     };
-                                if (info[f].key === 8){
-                                        key= "G#/Ab";
+                                    if (info[f].key === 8) {
+                                        key = "G#/Ab";
                                     };
-                                if(info[f].key === 9){
-                                        key= "A";
+                                    if (info[f].key === 9) {
+                                        key = "A";
                                     };
-                                if (info[f].key === 10){
-                                        key= "A#/Bb";
+                                    if (info[f].key === 10) {
+                                        key = "A#/Bb";
                                     };
-                                if (info[f].key === 11){
-                                        key= "B";
+                                    if (info[f].key === 11) {
+                                        key = "B";
                                     };
-                                if (info[f].key === 12){
-                                        key= "C";
+                                    if (info[f].key === 12) {
+                                        key = "C";
                                     };
 
                                     // if statements for mode
-                                if (info[f].mode === 0) {
+                                    if (info[f].mode === 0) {
                                         mode = "Minor";
                                     };
 
-                                if (info[f].mode === 1) {
+                                    if (info[f].mode === 1) {
                                         mode = "Major"
                                     };
 
                                     // if statements for time signature
-                                if (info[f].time_signature === 3) {
+                                    if (info[f].time_signature === 3) {
                                         timeSignature = "3/4";
                                     };
-                                if (info[f].time_signature === 4) {
+                                    if (info[f].time_signature === 4) {
                                         timeSignature = "4/4";
                                     };
-                                if (info[f].time_signature === 5) {
+                                    if (info[f].time_signature === 5) {
                                         timeSignature = "5/4";
                                     };
-                                if (info[f].time_signature === 6) {
+                                    if (info[f].time_signature === 6) {
                                         timeSignature = "6/4";
                                     };
-                                if (info[f].time_signature === 7) {
+                                    if (info[f].time_signature === 7) {
                                         timeSignature = "7/4";
                                     };
 
@@ -169,27 +170,99 @@ $(document).on("click", ".playlist", function () {
                                     };
 
                                     // append features to table
-                                    var appendToList= function (property) {
-                                    $($("#current-playlist-table tr")[f]).append(property);
+                                    var appendToList = function (property) {
+                                        $($("#current-playlist-table tr")[f]).append(property);
                                     };
 
-                                    appendToList("<td>"+ millisToMinutesAndSeconds(info[f].duration_ms) + "</td>");
-                                    appendToList("<td>"+ info[f].tempo +"</td>");
-                                    appendToList("<td>"+ key+"</td>");
-                                    appendToList("<td>"+ mode +"</td>");
-                                    appendToList("<td>"+ info[f].energy +"</td>");
-                                    appendToList("<td>"+ info[f].danceability +"</td>");
-                                    appendToList("<td>"+ info[f].valence +"</td>");
-                                    appendToList("<td>"+ timeSignature+"</td>");
-                                    
+                                    appendToList("<td>" + millisToMinutesAndSeconds(info[f].duration_ms) + "</td>");
+                                    appendToList("<td>" + info[f].tempo + "</td>");
+                                    appendToList("<td>" + key + "</td>");
+                                    appendToList("<td>" + mode + "</td>");
+                                    appendToList("<td>" + info[f].energy + "</td>");
+                                    appendToList("<td>" + info[f].danceability + "</td>");
+                                    appendToList("<td>" + info[f].valence + "</td>");
+                                    appendToList("<td>" + timeSignature + "</td>");
+
                                 };
                         };
                     },
                 });
             },
         });
+        // increment offset
         offset = offset + 100;
     };
+    // append table to div
     currentPlaylistTableDiv.append(currentPlaylistTable);
     $(".container").append(currentPlaylistTableDiv);
+
+    // make save button
+    if ($.trim($("#save-playlist-div").html()) == '') {
+        $("#save-playlist-div").append("<button id= 'save-button1' class= ' btn-lg'>Save to Spotify</button>");
+    };
+});
+
+// when you click on save button
+$(document).on("click", "#save-button1", function () {
+    $('#save-modal').css("display", "block");
+});
+
+
+//  when you click second save button
+$(document).on("click", "#save-button", function () {
+    var userId;
+    var newTrackIds = [];
+    var newPlaylistId;
+
+    // make modal disapear
+    $('#save-modal').css("display", "none");
+
+    // get ids from new playlist
+    for (i = 0; i < loopEnd; i++) {
+        newTrackIds.push($($("#current-playlist-table tr")[i]).attr("data-track-id"));
+    }
+    console.log(newTrackIds);
+
+    // make ajax call for user id
+    $.ajax({
+        url: "https://api.spotify.com/v1/me",
+        headers: {
+            "Authorization": "Bearer " + accessToken
+        },
+        success: function (response) {
+            userId = response.id;
+            console.log(userId);
+        },
+    });
+
+    // make ajax to make empty playlist
+    $.ajax({
+        url: "https://api.spotify.com/v1/users/" + userId + "/playlists",
+        type: "POST",
+        headers: {
+            "Authorization": "Bearer " + accessToken,
+            "Content-Type": "application/json",
+        },
+        data: {
+            "name": $("#playlist-name").val().trim(),
+            "public": false,
+        },
+        success: function (response) {
+            console.log(response);
+        },
+    });
+
+    // variables and loop for if playlist is >100 tracks
+    loopEnd = $(this).attr("data-total-tracks");
+    for (i = 0; i < loopEnd / 100; i++) {
+        var startOfLoop = 0;
+        var endOfLoop = 100;
+        var newTrackIdsString;
+
+        // for loop to track ids in groups of 100
+        for (j = startOfLoop; j < endOfLoop; j++) {
+            newTrackIdsString = newTrackIdsString + newTrackIds[j]
+        }
+        
+    };
 });
