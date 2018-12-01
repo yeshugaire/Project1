@@ -8,8 +8,8 @@ header p {
 }
 
 header img {
-   height: 50px; 
-   margin: 25px;
+    height: 50px; 
+    margin: 25px;
 }
 
 #title-div {
@@ -20,6 +20,30 @@ header h1 {
     font-size: 60px;
 }
 
+#save-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    right: 0px;
+    top: 0px;
+    width: 33.3%;
+    height: 151px;
+    overflow: auto;
+    background-color: white;
+    padding: 20px;
+}
+
+#save-button1, #save-button {
+    background-color: #23cf5f;
+    border-radius: 24px;
+}
+
+#save-button1 {
+    position: relative;
+    top: 50px;
+    left: 100px;
+}
+=======
 .btn-lg {
     border-radius: 24px;
 }
