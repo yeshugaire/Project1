@@ -387,7 +387,10 @@ $(document).on("click", ".playlist", function () {
                             },
                         });
                         offset = offset + 100;
-                    },
-                    currentPlaylistTableDiv.append(currentPlaylistTable); $(".container").append(currentPlaylistTableDiv);
+                    })
+                    ,
+                    currentPlaylistTableDiv.append(currentPlaylistTable)
+                    $(".container").append(currentPlaylistTableDiv)
+                
 
                 });
