@@ -29,7 +29,7 @@ $(document).on("click", ".playlist", function () {
 
     // make table for current playlist
     var currentPlaylistTableDiv = $("<div>");
-    var currentPlaylistTable = $("<table id='table_id' class='display'><thead><tr><th>Name</th><th>Artist</th><th>Album</th><th>Length</th><th>Tempo(BPM)</th><th>Key</th><th>Mode</th><th>Energy</th><th>Danceability</th><th>Euphoria</th><th>Time Signature</th></tr></thead><tbody id= 'current-playlist-table'</tbody></table>");
+    var currentPlaylistTable = $("<table id='table_id' class='display table-striped'><thead><tr><th>Name</th><th>Artist</th><th>Album</th><th>Length</th><th>Tempo(BPM)</th><th>Key</th><th>Mode</th><th>Energy</th><th>Danceability</th><th>Euphoria</th><th>Time Signature</th></tr></thead><tbody id= 'current-playlist-table'</tbody></table>");
 
     // clear playlist table if choosing new playlist
     currentPlaylistTableDiv.empty();
@@ -67,7 +67,7 @@ $(document).on("click", ".playlist", function () {
                     // };
 
                     // make table row and add name, ablum and artist to it
-                    var tableRow = $("<tr data-track-id='" + data.id + "'><td>" + data.name + "</td><td>" + trackArtists + "</td><td>" + data.album.name + "</td></tr>");
+                    var tableRow = $("<tr data-track-id='" + data.id + "' data-track-uri='" + data.uri + "'><td>" + data.name + "</td><td>" + trackArtists + "</td><td>" + data.album.name + "</td></tr>");
                     $("#current-playlist-table").append(tableRow);
 
                 };
@@ -207,21 +207,21 @@ $(document).on("click", "#save-button1", function () {
     $('#save-modal').css("display", "block");
 });
 
-
 //  when you click second save button
 $(document).on("click", "#save-button", function () {
     var userId;
-    var newTrackIds = [];
+    var trackUris = [];
     var newPlaylistId;
+    var playlistName = $("#playlist-name").val().trim();
 
     // make modal disapear
     $('#save-modal').css("display", "none");
 
     // get ids from new playlist
     for (i = 0; i < loopEnd; i++) {
-        newTrackIds.push($($("#current-playlist-table tr")[i]).attr("data-track-id"));
+        trackUris.push($($("#current-playlist-table tr")[i]).attr("data-track-uri"));
     }
-    console.log(newTrackIds);
+    console.log(trackUris);
 
     // make ajax call for user id
     $.ajax({
@@ -232,37 +232,42 @@ $(document).on("click", "#save-button", function () {
         success: function (response) {
             userId = response.id;
             console.log(userId);
+            // make ajax to make empty playlist
+            $.ajax({
+                url: "https://api.spotify.com/v1/users/" + userId + "/playlists",
+                type: "POST",
+                headers: {
+                    "Authorization": "Bearer " + accessToken,
+                    "Content-Type": "application/json",
+                },
+                data: JSON.stringify({
+                    "name": playlistName,
+                    "public": false,
+                }),
+                success: function (response) {
+                    console.log(response);
+
+                    // add tracks to playlist
+                    $.ajax({
+                        url: "https://api.spotify.com/v1/playlists/" + response.id + "/tracks",
+                        type: "POST",
+                        headers: {
+                            "Authorization": "Bearer " + accessToken,
+                            "Content-Type": "application/json",
+                        },
+                        data:JSON.stringify({
+                            uris: trackUris,
+                            }),
+                        success: function (response) {
+
+                        },
+                    });
+
+                },
+                Error: function () {
+                    console.log("error:"());
+                },
+            });
         },
     });
-
-    // make ajax to make empty playlist
-    $.ajax({
-        url: "https://api.spotify.com/v1/users/" + userId + "/playlists",
-        type: "POST",
-        headers: {
-            "Authorization": "Bearer " + accessToken,
-            "Content-Type": "application/json",
-        },
-        data: {
-            "name": $("#playlist-name").val().trim(),
-            "public": false,
-        },
-        success: function (response) {
-            console.log(response);
-        },
-    });
-
-    // variables and loop for if playlist is >100 tracks
-    loopEnd = $(this).attr("data-total-tracks");
-    for (i = 0; i < loopEnd / 100; i++) {
-        var startOfLoop = 0;
-        var endOfLoop = 100;
-        var newTrackIdsString;
-
-        // for loop to track ids in groups of 100
-        for (j = startOfLoop; j < endOfLoop; j++) {
-            newTrackIdsString = newTrackIdsString + newTrackIds[j]
-        }
-        
-    };
 });
