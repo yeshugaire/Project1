@@ -2,6 +2,12 @@ header {
     background-color: black;
 }
 
+.main {
+    position: fixed;
+    top: 0px;
+    width: 100%
+}
+
 header p {
     padding: 5px;
     margin-bottom: 0px;
@@ -23,12 +29,11 @@ header h1 {
 #save-modal {
     display: none; 
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     right: 0px;
     top: 0px;
     width: 33.3%;
     height: 151px;
-    overflow: auto;
     background-color: white;
     padding: 20px;
 }
@@ -50,6 +55,11 @@ header h1 {
 
 .tablecolor {
     background: teal;
+}
+
+.container{
+    position: relative;
+    top: 151px;
 }
 
 
