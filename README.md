@@ -6,6 +6,6 @@ In this app users can also sort the playlist based on (length, tempo, key modde,
 HTML, CSS, Bootstrap, Jquery, Java Script,  Spotify API. 
 
 # The contributors to this application are:
-   . Daniel Lois
-   . Tyler Pilette
-   . Yeshu Gaire
+    Daniel Lois
+    Tyler Pilette
+    Yeshu Gaire
